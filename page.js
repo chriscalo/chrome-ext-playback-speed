@@ -3,9 +3,15 @@
 // extension click ("browser action"), calculates the new playback rate and then
 // sends a message to all frames to apply that rate.
 
+console.debug("[page.js] load", { self, window, "top": window === window.top });
+
 const nextRate = cycle(1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 1);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.debug(
+    "[page.js] chrome.runtime.onMessage.addListener()",
+    {request, sender, sendResponse},
+  );
   switch (request.command) {
     case "browser action": {
       const rate = nextRate();

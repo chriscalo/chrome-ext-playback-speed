@@ -4,12 +4,20 @@
 
 // forwards all messages from content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.debug(
+    "[service-worker.js] chrome.runtime.onMessage.addListener()",
+    {request, sender, sendResponse},
+  );
   // TODO: pass along response
   sendMessage(request);
 });
 
 // broadcasts when the browser action is clicked
-chrome.browserAction.onClicked.addListener(tab => {
+chrome.action.onClicked.addListener(tab => {
+  console.debug(
+    "[service-worker.js] chrome.action.onClicked.addListener()",
+    {tab},
+  );
   sendMessage({
     command: "browser action",
   });
@@ -17,6 +25,10 @@ chrome.browserAction.onClicked.addListener(tab => {
 
 // abstract away minutiae of message sending
 function sendMessage(message, callback) {
+  console.debug(
+    "[service-worker.js] sendMessage()",
+    {message, callback},
+  );
   chrome.tabs.query({
     active: true,
     currentWindow: true,

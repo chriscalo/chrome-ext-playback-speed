@@ -1,34 +1,32 @@
 {
   "name": "Playback Rate",
   "description": "Speeds up media playback rates so you can get on with your life",
-  "version": "0.1.0",
-  "manifest_version": 2,
-  "icons": {
-    "16": "16.png",
-    "48": "48.png",
-    "128": "128.png"
-  },
-  "browser_action": {
-    "title": "Playback Rate"
-  },
+  "version": "0.2.0",
+  "manifest_version": 3,
   "permissions": [
     "tabs"
   ],
+  "action": {
+    "default_icon": {
+      "16": "16.png",
+      "48": "48.png",
+      "128": "128.png"
+    },
+    "default_title": "Playback Rate"
+  },
   "background": {
-    "persistent": false,
-    "scripts": [
-      "background.js"
-    ]
+    "service_worker": "service-worker.js",
+    "type": "module"
   },
   "content_scripts": [{
-    "matches": [ "*://*/*" ],
+    "matches": ["<all_urls>"],
+    "all_frames": true,
     "js": [ "frame.js" ],
-    "run_at": "document_end",
-    "all_frames": true
+    "run_at": "document_end"
   }, {
-    "matches": [ "*://*/*" ],
+    "matches": ["<all_urls>"],
+    "all_frames": false,
     "js": [ "page.js" ],
-    "run_at": "document_end",
-    "all_frames": false
-  }],
+    "run_at": "document_end"
+  }]
 }
