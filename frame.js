@@ -11,12 +11,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   );
   switch (request.command) {
     case "browser action": {
-      const rate = getNextRate();
-      console.log(`[frame.js] Setting playback rate to ${rate}x`);
-      setRate(rate);
+      console.log(`[frame.js] Setting playback rate to ${request.rate}x`);
+      setRate(request.rate);
       sendResponse({
         result: "success",
-        rate: rate,
+        rate: request.rate,
       });
       break;
     }
@@ -33,26 +32,26 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 const MEDIA_ELEMENT_SELECTOR = "video, audio";
 
 
-function getLastRate() {
-  const { dataset } = document.documentElement;
-  return parseFloat(dataset.playbackSpeedExtensionRate);
-}
-
-function setLastRate(value) {
-  const { dataset } = document.documentElement;
-  return dataset.playbackSpeedExtensionRate = value;
-}
-
-function setRate(rate) {
-  for (const element of document.querySelectorAll(MEDIA_ELEMENT_SELECTOR)) {
-    element.playbackRate = rate;
-  }
-  setLastRate(rate);
-}
-
-function getNextRate() {
-  const rates = [1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 1];
-  const lastRate = getLastRate();
-  const nextIndex = (rates.indexOf(lastRate) + 1) % rates.length;
-  return rates[nextIndex];
-}
+// function getLastRate() {
+//   const { dataset } = document.documentElement;
+//   return parseFloat(dataset.playbackSpeedExtensionRate);
+// }
+// 
+// function setLastRate(value) {
+//   const { dataset } = document.documentElement;
+//   return dataset.playbackSpeedExtensionRate = value;
+// }
+// 
+// function setRate(rate) {
+//   for (const element of document.querySelectorAll(MEDIA_ELEMENT_SELECTOR)) {
+//     element.playbackRate = rate;
+//   }
+//   setLastRate(rate);
+// }
+// 
+// function getNextRate() {
+//   const rates = [1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 1];
+//   const lastRate = getLastRate();
+//   const nextIndex = (rates.indexOf(lastRate) + 1) % rates.length;
+//   return rates[nextIndex];
+// }
