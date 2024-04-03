@@ -22,7 +22,9 @@ const TabSessionStore = {
       arguments: { tabId },
     }, async function execute(context) {
       const key = `tabs/${tabId}`;
+      context.$log("key", key);
       const data = await chrome.storage.session.get();
+      context.$log("data", data);
       return data[key];
     });
   },
@@ -33,7 +35,9 @@ const TabSessionStore = {
       arguments: { tabId, data },
     }, async function execute(context) {
       const key = `tabs/${tabId}`;
+      context.$log("key", key);
       const payload = { [key]: data };
+      context.$log("payload", payload);
       await chrome.storage.session.set(payload);
       return TabSessionStore.get(tabId);
     });
