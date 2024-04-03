@@ -4,7 +4,8 @@
   "version": "0.2.0",
   "manifest_version": 3,
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "action": {
     "default_icon": {
@@ -22,11 +23,6 @@
     "matches": ["<all_urls>"],
     "all_frames": true,
     "js": [ "frame.js" ],
-    "run_at": "document_end"
-  }, {
-    "matches": ["<all_urls>"],
-    "all_frames": false,
-    "js": [ "page.js" ],
     "run_at": "document_end"
   }]
 }
