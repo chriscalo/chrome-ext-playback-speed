@@ -4,6 +4,19 @@
 
 import { debug } from "./debug.js";
 
+// TODO: find a cleaner way to do this
+// 
+// import { debug } from "./debug.js";
+// 
+// const withDebugInfo = debug.create({
+//   package: "chrome-ext-playback-speed",
+//   file: "service-worker.js",
+// });
+// 
+// withDebugInfo({
+//   event: "load",
+// });
+// 
 const moduleContext = {
   package: "chrome-ext-playback-speed",
   file: "service-worker.js",
