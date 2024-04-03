@@ -1,6 +1,6 @@
 {
   "name": "Playback Rate",
-  "description": "Speeds up media playback rates so you can get on with your life",
+  "description": "Speeds up video and audio playback rates from 1× to 4×",
   "version": "0.2.0",
   "manifest_version": 3,
   "permissions": [
