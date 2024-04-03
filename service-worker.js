@@ -9,17 +9,6 @@ debug({
   event: "load",
 });
 
-(async function () {
-  debug({
-    file: "service-worker.js",
-    event: "load",
-    function: "iife",
-    storage: {
-      session: await chrome.storage.session.get(),
-    },
-  });
-})();
-
 const TabSessionData = {
   async get(tabId) {
     return (await chrome.storage.session.get())[`tabs/${tabId}`];
