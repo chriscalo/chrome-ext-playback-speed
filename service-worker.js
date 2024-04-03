@@ -9,7 +9,7 @@ debug({
   event: "load",
 });
 
-const TabSessionData = {
+const TabSessionStore = {
   async get(tabId) {
     return (await chrome.storage.session.get())[`tabs/${tabId}`];
   },
@@ -71,11 +71,8 @@ async function readSavedRate(tabId) {
     function: "readSavedRate(tabId)",
     arguments: { tabId },
   }, async function execute(context) {
-    const key = `tabs/${tabId}`;
-    context.$log("key", key);
-    
     const defaultRate = 1;
-    const storedData = await TabSessionData.get(tabId);
+    const storedData = await TabSessionStore.get(tabId);
     context.$log("storedData", storedData);
     
     return storedData?.rate ?? defaultRate;
@@ -88,13 +85,10 @@ async function writeSavedRate(tabId, rate) {
     function: "writeSavedRate(tabId, rate)",
     arguments: { tabId, rate },
   }, async function execute(context) {
-    const key = `tabs/${tabId}`;
-    context.$log("key", key);
-    
     const payload = { rate: rate };
     context.$log("payload", payload);
     
-    const saved = await TabSessionData.set(tabId, payload);
+    const saved = await TabSessionStore.set(tabId, payload);
     context.$log("saved", saved);
   });
 }
