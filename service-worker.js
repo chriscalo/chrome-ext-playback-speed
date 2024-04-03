@@ -4,18 +4,39 @@
 
 import { debug } from "./debug.js";
 
-debug({
+const moduleContext = {
+  package: "chrome-ext-playback-speed",
   file: "service-worker.js",
+};
+
+debug({
+  ...moduleContext,
   event: "load",
 });
 
 const TabSessionStore = {
   async get(tabId) {
-    return (await chrome.storage.session.get())[`tabs/${tabId}`];
+    return debug({
+      ...moduleContext,
+      function: "TabSessionStore.get(tabId)",
+      arguments: { tabId },
+    }, async function execute(context) {
+      const key = `tabs/${tabId}`;
+      const data = await chrome.storage.session.get();
+      return data[key];
+    });
   },
   async set(tabId, data) {
-    await chrome.storage.session.set({ [`tabs/${tabId}`]: data });
-    return TabSessionData.get(tabId);
+    return debug({
+      ...moduleContext,
+      function: "TabSessionStore.set(tabId, data)",
+      arguments: { tabId, data },
+    }, async function execute(context) {
+      const key = `tabs/${tabId}`;
+      const payload = { [key]: data };
+      await chrome.storage.session.set(payload);
+      return TabSessionStore.get(tabId);
+    });
   },
 }
 
@@ -26,7 +47,7 @@ chrome.runtime.onMessage.addListener(async function messageHandler(
   sendResponse,
 ) {
   return debug({
-    file: "service-worker.js",
+    ...moduleContext,
     event: "chrome.runtime.onMessage",
     function: "messageHandler(request, sender, sendResponse)",
     arguments: { request, sender, sendResponse },
@@ -40,7 +61,7 @@ chrome.runtime.onMessage.addListener(async function messageHandler(
 // broadcasts when the browser action is clicked
 chrome.action.onClicked.addListener(async function actionHandler(tab) {
   return debug({
-    file: "service-worker.js",
+    ...moduleContext,
     event: "chrome.action.onClicked",
     function: "actionHandler(tab)",
     arguments: { tab },
@@ -67,7 +88,7 @@ chrome.action.onClicked.addListener(async function actionHandler(tab) {
 
 async function readSavedRate(tabId) {
   return debug({
-    file: "service-worker.js",
+    ...moduleContext,
     function: "readSavedRate(tabId)",
     arguments: { tabId },
   }, async function execute(context) {
@@ -81,7 +102,7 @@ async function readSavedRate(tabId) {
 
 async function writeSavedRate(tabId, rate) {
   return debug({
-    file: "service-worker.js",
+    ...moduleContext,
     function: "writeSavedRate(tabId, rate)",
     arguments: { tabId, rate },
   }, async function execute(context) {
@@ -96,7 +117,7 @@ async function writeSavedRate(tabId, rate) {
 const rates = [1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4, 1];
 async function getNextRate(tabId) {
   return debug({
-    file: "service-worker.js",
+    ...moduleContext,
     function: "getNextRate(tabId)",
     arguments: { tabId },
   }, async function execute(context) {

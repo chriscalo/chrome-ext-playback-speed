@@ -11,8 +11,8 @@ function debug(context, execute) {
   });
   
   try {
-    const { file, event, function: fn } = context;
-    const label = [file, event, fn].filter(Boolean).join(" : ");
+    const { package: pkg, file, event, function: fn } = context;
+    const label = [pkg, file, event, fn].filter(Boolean).join(" : ");
     console.group(label);
     
     if (typeof execute === "function") {

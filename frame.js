@@ -4,24 +4,23 @@
 
 import { debug } from "./debug.js";
 
-debug({
+const moduleContext = {
+  package: "chrome-ext-playback-speed",
   file: "frame.js",
+};
+
+debug({
+  ...moduleContext,
   event: "load",
 });
 
-export function main() {
-  chrome.runtime.onMessage.addListener(messageHandler);
-}
-
-main();
-
-function messageHandler(
+chrome.runtime.onMessage.addListener(function messageHandler(
   request,
   sender,
   sendResponse,
 ) {
   return debug({
-    file: "frame.js",
+    ...moduleContext,
     event: "chrome.runtime.onMessage",
     function: "messageHandler(request, sender, sendResponse)",
     arguments: { request, sender, sendResponse },
@@ -46,13 +45,13 @@ function messageHandler(
       }
     }
   });
-}
+});
 
 const MEDIA_ELEMENT_SELECTOR = "video, audio";
 
 function setRate(rate) {
   return debug({
-    file: "frame.js",
+    ...moduleContext,
     function: "setRate(rate)",
     arguments: { rate },
   }, async function execute(context) {
