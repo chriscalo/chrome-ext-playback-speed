@@ -95,7 +95,7 @@ chrome.action.onClicked.addListener(async function actionHandler(tab) {
     context.$log("message", message);
     chrome.tabs.sendMessage(tabId, message);
     
-    const badgeText = String(rate);
+    const badgeText = `${rate}×`;
     context.$log("badgeText", badgeText);
     chrome.action.setBadgeText({tabId, text: badgeText});
     
