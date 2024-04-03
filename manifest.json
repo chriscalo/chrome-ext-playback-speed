@@ -9,9 +9,9 @@
   ],
   "action": {
     "default_icon": {
-      "16": "16.png",
-      "48": "48.png",
-      "128": "128.png"
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
     },
     "default_title": "Playback Rate"
   },
