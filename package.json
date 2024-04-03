@@ -2,8 +2,8 @@
   "name": "chrome-ext-playback-speed",
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "build": "rollup -c"
   },
   "devDependencies": {
     "rollup": "^4.13.2",
