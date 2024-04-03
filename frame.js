@@ -35,7 +35,6 @@ function messageHandler(
           rate: request.rate,
         };
         context.$log("response", response);
-      // sendResponse(response);
         break;
       }
       default: {
